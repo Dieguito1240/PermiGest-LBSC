@@ -29,8 +29,8 @@ INSERT INTO unidades (
 )
 VALUES
 (
-    'Administración',
-    'Unidad responsable de procesos administrativos y gestión interna.',
+    'Administracion',
+    'Unidad responsable de procesos administrativos y gestion interna.',
     TRUE
 ),
 (
