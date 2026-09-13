@@ -96,6 +96,64 @@ def conectar_bd():
         row_factory=dict_row
     )
 
+
+def obtener_ip_cliente():
+    """Obtiene la IP del cliente considerando proxies como Render."""
+    ip_reenviada = request.headers.get(
+        "X-Forwarded-For",
+        ""
+    )
+
+    if ip_reenviada:
+        ip = ip_reenviada.split(",")[0].strip()
+    else:
+        ip = (
+            request.headers.get("X-Real-IP")
+            or request.remote_addr
+            or ""
+        ).strip()
+
+    return ip[:45] if ip else None
+
+
+def registrar_auditoria(
+    cursor,
+    id_usuario,
+    accion,
+    entidad,
+    id_registro,
+    detalle
+):
+    """Registra una acción de auditoría almacenando la fecha en UTC."""
+    cursor.execute("""
+        INSERT INTO auditoria (
+            id_usuario,
+            accion,
+            entidad,
+            id_registro,
+            detalle,
+            direccion_ip,
+            fecha_evento
+        )
+        VALUES (
+            %s,
+            %s,
+            %s,
+            %s,
+            %s,
+            %s,
+            CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+        );
+    """, (
+        id_usuario,
+        accion,
+        entidad,
+        id_registro,
+        detalle,
+        obtener_ip_cliente()
+    ))
+
+
 def obtener_serializer_recuperacion():
     secreto = app.config["PASSWORD_RESET_SECRET"]
 
@@ -1129,37 +1187,13 @@ def resolver_estado_solicitud(id_solicitud):
         )
 
 
-        cursor.execute(
-            """
-            INSERT INTO auditoria
-            (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip,
-                fecha_evento
-            )
-            VALUES
-            (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                CURRENT_TIMESTAMP
-            );
-            """,
-            (
-                id_usuario,
-                "RESOLVER_SOLICITUD",
-                "solicitudes",
-                id_solicitud,
-                detalle_auditoria,
-                request.remote_addr
-            )
+        registrar_auditoria(
+            cursor,
+            id_usuario,
+            "RESOLVER_SOLICITUD",
+            "solicitudes",
+            id_solicitud,
+            detalle_auditoria
         )
 
 
@@ -1556,24 +1590,14 @@ def crear_funcionario_admin():
 
 
 
-        cursor.execute("""
-            INSERT INTO auditoria (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip
-            )
-            VALUES (%s, %s, %s, %s, %s, %s);
-        """, (
+        registrar_auditoria(
+            cursor,
             id_usuario_admin,
             "CREAR_FUNCIONARIO",
             "funcionarios",
             id_funcionario,
-            "Creación de funcionario y cuenta de acceso.",
-            request.remote_addr
-        ))
+            "Creación de funcionario y cuenta de acceso."
+        )
 
 
         conexion.commit()
@@ -1860,24 +1884,14 @@ def editar_funcionario_admin(id_funcionario):
 
 
 
-        cursor.execute("""
-            INSERT INTO auditoria (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip
-            )
-            VALUES (%s, %s, %s, %s, %s, %s);
-        """, (
+        registrar_auditoria(
+            cursor,
             id_usuario_admin,
             "EDITAR_FUNCIONARIO",
             "funcionarios",
             id_funcionario,
-            "Actualización de datos del funcionario.",
-            request.remote_addr
-        ))
+            "Actualización de datos del funcionario."
+        )
 
 
         conexion.commit()
@@ -2432,7 +2446,9 @@ def obtener_auditoria():
                 a.detalle,
                 a.direccion_ip,
                 TO_CHAR(
-                    a.fecha_evento,
+                    (
+                        a.fecha_evento AT TIME ZONE 'UTC'
+                    ) AT TIME ZONE 'America/Santiago',
                     'YYYY-MM-DD HH24:MI:SS'
                 ) AS fecha_evento
             FROM auditoria a
@@ -2452,7 +2468,16 @@ def obtener_auditoria():
         cursor.execute("""
             SELECT COUNT(*) AS total
             FROM auditoria
-            WHERE fecha_evento::date = CURRENT_DATE;
+            WHERE (
+                (
+                    fecha_evento AT TIME ZONE 'UTC'
+                ) AT TIME ZONE 'America/Santiago'
+            )::date
+            =
+            (
+                CURRENT_TIMESTAMP
+                AT TIME ZONE 'America/Santiago'
+            )::date;
         """)
 
         registros_hoy = cursor.fetchone()["total"]
@@ -2488,7 +2513,6 @@ def obtener_auditoria():
 
         if conexion:
             conexion.close()
-
 
 @app.route("/recuperar-contrasena")
 def recuperar_contrasena_page():
@@ -2763,31 +2787,14 @@ def restablecer_password():
             id_usuario
         ))
 
-        cursor.execute("""
-            INSERT INTO auditoria (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip
-            )
-            VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            );
-        """, (
+        registrar_auditoria(
+            cursor,
             id_usuario,
             "RESTABLECER_PASSWORD",
             "usuarios",
             id_usuario,
-            "Restablecimiento de contraseña mediante enlace seguro.",
-            request.remote_addr
-        ))
+            "Restablecimiento de contraseña mediante enlace seguro."
+        )
 
         conexion.commit()
 
@@ -2975,31 +2982,14 @@ def actualizar_perfil():
             usuario["id_funcionario"]
         ))
 
-        cursor.execute("""
-            INSERT INTO auditoria (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip
-            )
-            VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            );
-        """, (
+        registrar_auditoria(
+            cursor,
             id_usuario,
             "ACTUALIZAR_PERFIL",
             "funcionarios",
             usuario["id_funcionario"],
-            "Actualización de datos personales de la cuenta.",
-            request.remote_addr
-        ))
+            "Actualización de datos personales de la cuenta."
+        )
 
         conexion.commit()
 
@@ -3126,31 +3116,14 @@ def cambiar_password_perfil():
             id_usuario
         ))
 
-        cursor.execute("""
-            INSERT INTO auditoria (
-                id_usuario,
-                accion,
-                entidad,
-                id_registro,
-                detalle,
-                direccion_ip
-            )
-            VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            );
-        """, (
+        registrar_auditoria(
+            cursor,
             id_usuario,
             "CAMBIAR_PASSWORD",
             "usuarios",
             id_usuario,
-            "Cambio de contraseña realizado desde Mi cuenta.",
-            request.remote_addr
-        ))
+            "Cambio de contraseña realizado desde Mi cuenta."
+        )
 
         conexion.commit()
 
