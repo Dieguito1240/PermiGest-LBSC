@@ -56,15 +56,15 @@
                 </a>
 
                 <a
-                    href="#"
-                    class="nav-link"
+                    href="/admin/solicitudes"
+                    class="nav-link admin-option"
                     id="menuSolicitudes"
                 >
                     Solicitudes
                 </a>
 
                 <a
-                    href="#"
+                    href="/permisos"
                     class="nav-link"
                     id="menuPermisos"
                 >
@@ -79,6 +79,13 @@
                 </a>
 
                 <a
+                    href="/perfil"
+                    class="nav-link"
+                >
+                    Mi cuenta
+                </a>
+
+                <a
                     href="/admin/funcionarios"
                     class="nav-link admin-option"
                 >
@@ -86,14 +93,14 @@
                 </a>
 
                 <a
-                    href="#"
+                    href="/estadisticas"
                     class="nav-link admin-option"
                 >
                     Estadísticas
                 </a>
 
                 <a
-                    href="#"
+                    href="/auditoria"
                     class="nav-link admin-option"
                 >
                     Auditoría
@@ -106,6 +113,7 @@
             </div>
 
         </aside>
+
 
         <main class="dashboard-main">
 
@@ -154,6 +162,7 @@
 
             </header>
 
+
             <section
                 class="dashboard-cards"
                 aria-label="Resumen del historial"
@@ -178,6 +187,7 @@
 
                 </article>
 
+
                 <article class="stat-card">
 
                     <div class="stat-title">
@@ -197,6 +207,7 @@
 
                 </article>
 
+
                 <article class="stat-card">
 
                     <div class="stat-title">
@@ -215,6 +226,7 @@
                     </div>
 
                 </article>
+
 
                 <article class="stat-card">
 
@@ -237,6 +249,7 @@
 
             </section>
 
+
             <section class="dashboard-panel">
 
                 <div class="panel-header">
@@ -254,6 +267,7 @@
                     </div>
 
                 </div>
+
 
                 <div class="table-container">
 
@@ -316,6 +330,7 @@
         </main>
 
     </div>
+
 
     <script
         src="{{ url_for('static', filename='js/historial.js') }}"
