@@ -8,7 +8,7 @@ INSERT INTO roles (
 VALUES
 (
     'Administrador',
-    'Usuario con permisos de gestión administrativa del sistema.',
+    'Usuario con permisos de gestion administrativa del sistema.',
     TRUE
 ),
 (
@@ -59,7 +59,7 @@ INSERT INTO tipos_permiso (
 VALUES
 (
     'Permiso Administrativo',
-    'Permiso administrativo controlado principalmente por días.',
+    'Permiso administrativo controlado principalmente por dias.',
     'DIAS',
     FALSE,
     TRUE
@@ -72,7 +72,7 @@ VALUES
     TRUE
 ),
 (
-    'Comisión de Servicio',
+    'Comision de Servicio',
     'Permiso asociado a actividades institucionales fuera del establecimiento.',
     'DIAS',
     FALSE,
@@ -93,7 +93,7 @@ INSERT INTO estados_solicitud (
 VALUES
 (
     'Pendiente',
-    'Solicitud registrada y pendiente de revisión administrativa.'
+    'Solicitud registrada y pendiente de revision administrativa.'
 ),
 (
     'Aprobada',
