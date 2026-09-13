@@ -259,14 +259,11 @@ Liceo Bicentenario Santa Cruz
     )
 
     print(
-        "Intentando enviar correo de recuperación a:",
-        destinatario
-    )
-    print(
-        "Servidor SMTP:",
+        "SMTP: intentando conexión con",
         host,
-        "Puerto:",
-        puerto
+        "puerto",
+        puerto,
+        flush=True
     )
 
     with smtplib.SMTP(
@@ -275,15 +272,34 @@ Liceo Bicentenario Santa Cruz
         timeout=20
     ) as servidor:
 
+        print(
+            "SMTP: conexión establecida.",
+            flush=True
+        )
+
         servidor.ehlo()
 
         if app.config["SMTP_USE_TLS"]:
+            print(
+                "SMTP: iniciando STARTTLS.",
+                flush=True
+            )
             servidor.starttls()
             servidor.ehlo()
+
+        print(
+            "SMTP: autenticando usuario.",
+            flush=True
+        )
 
         servidor.login(
             usuario,
             password
+        )
+
+        print(
+            "SMTP: autenticación correcta; enviando mensaje.",
+            flush=True
         )
 
         rechazados = servidor.send_message(
@@ -296,8 +312,8 @@ Liceo Bicentenario Santa Cruz
             )
 
     print(
-        "Correo de recuperación enviado correctamente a:",
-        destinatario
+        "SMTP: correo enviado correctamente.",
+        flush=True
     )
 
 
@@ -2556,6 +2572,11 @@ def solicitar_recuperacion_password():
                     "Debe ingresar un correo electrónico válido."
             }), 400
 
+        print(
+            "RECUPERACION: solicitud recibida.",
+            flush=True
+        )
+
         conexion = conectar_bd()
         cursor = conexion.cursor(
             row_factory=dict_row
@@ -2591,6 +2612,11 @@ def solicitar_recuperacion_password():
             and usuario["usuario_activo"]
             and usuario["funcionario_activo"]
         ):
+            print(
+                "RECUPERACION: usuario encontrado y activo.",
+                flush=True
+            )
+
             try:
                 if not usuario["password_hash"]:
                     raise RuntimeError(
@@ -2614,6 +2640,11 @@ def solicitar_recuperacion_password():
                     + usuario["apellido_paterno"]
                 )
 
+                print(
+                    "RECUPERACION: token generado; intentando enviar correo.",
+                    flush=True
+                )
+
                 enviar_correo_recuperacion(
                     usuario[
                         "correo_institucional"
@@ -2622,13 +2653,24 @@ def solicitar_recuperacion_password():
                     enlace
                 )
 
+                print(
+                    "RECUPERACION: proceso de envío finalizado correctamente.",
+                    flush=True
+                )
+
             except Exception as error_recuperacion:
                 print(
-                    "Error interno en recuperación de contraseña:",
+                    "RECUPERACION ERROR:",
                     type(error_recuperacion).__name__,
                     "-",
-                    error_recuperacion
+                    str(error_recuperacion),
+                    flush=True
                 )
+        else:
+            print(
+                "RECUPERACION: no se encontró una cuenta activa para el correo recibido.",
+                flush=True
+            )
 
         return jsonify({
             "mensaje": mensaje_generico
@@ -2636,10 +2678,11 @@ def solicitar_recuperacion_password():
 
     except Exception as error:
         print(
-            "Error al consultar recuperación de contraseña:",
+            "RECUPERACION ERROR GENERAL:",
             type(error).__name__,
             "-",
-            error
+            str(error),
+            flush=True
         )
 
         return jsonify({
