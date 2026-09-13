@@ -58,15 +58,15 @@ INSERT INTO tipos_permiso (
 )
 VALUES
 (
-    'Permiso Administrativo',
+    'Permiso Administrativo por Dia',
     'Permiso administrativo controlado principalmente por dias.',
     'DIAS',
     FALSE,
     TRUE
 ),
 (
-    'Permiso por Horas',
-    'Permiso solicitado por un rango horario dentro de la jornada.',
+    'Permiso Administrativo por Horas',
+    'Permiso administrativo solicitado por un rango horario dentro de la jornada.',
     'HORAS',
     TRUE,
     TRUE
