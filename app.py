@@ -360,6 +360,9 @@ def listar_solicitudes():
 @app.route("/api/solicitudes", methods=["POST"])
 @jwt_required()
 def crear_solicitud():
+    conexion = None
+    cursor = None
+
     try:
         datos = request.get_json()
 
@@ -395,22 +398,79 @@ def crear_solicitud():
         conexion = conectar_bd()
         cursor = conexion.cursor()
 
+
+        cursor.execute("""
+            SELECT
+                id_tipo_permiso,
+                nombre,
+                unidad_control,
+                requiere_horario
+            FROM tipos_permiso
+            WHERE id_tipo_permiso = %s
+              AND activo = TRUE;
+        """, (
+            datos["id_tipo_permiso"],
+        ))
+
+        tipo_permiso = cursor.fetchone()
+
+        if not tipo_permiso:
+            return jsonify({
+                "ok": False,
+                "error": "El tipo de permiso seleccionado no es válido."
+            }), 400
+
+
+        cursor.execute("""
+            SELECT
+                s.id_solicitud,
+                s.fecha_inicio,
+                s.fecha_termino,
+                e.nombre AS estado
+            FROM solicitudes s
+            INNER JOIN estados_solicitud e
+                ON e.id_estado = s.id_estado
+            WHERE s.id_funcionario = %s
+              AND s.id_tipo_permiso = %s
+              AND e.nombre IN ('Pendiente', 'Aprobada')
+              AND s.fecha_inicio <= %s
+              AND s.fecha_termino >= %s
+            LIMIT 1;
+        """, (
+            id_funcionario,
+            datos["id_tipo_permiso"],
+            datos["fecha_termino"],
+            datos["fecha_inicio"]
+        ))
+
+        solicitud_existente = cursor.fetchone()
+
+        if solicitud_existente:
+            return jsonify({
+                "ok": False,
+                "error": (
+                    "Ya existe una solicitud pendiente o aprobada "
+                    "del mismo tipo para la fecha o período seleccionado."
+                )
+            }), 409
+
+
         cursor.execute("""
             SELECT id_estado
             FROM estados_solicitud
             WHERE nombre = %s;
-        """, ("Pendiente",))
+        """, (
+            "Pendiente",
+        ))
 
         estado = cursor.fetchone()
 
         if not estado:
-            cursor.close()
-            conexion.close()
-
             return jsonify({
                 "ok": False,
                 "error": "No se encontró el estado Pendiente."
             }), 500
+
 
         cursor.execute("""
             INSERT INTO solicitudes (
@@ -447,9 +507,6 @@ def crear_solicitud():
 
         conexion.commit()
 
-        cursor.close()
-        conexion.close()
-
         return jsonify({
             "ok": True,
             "mensaje": "Solicitud creada correctamente",
@@ -457,12 +514,22 @@ def crear_solicitud():
         }), 201
 
     except Exception as error:
-        print(error)
+        print("Error al crear solicitud:", error)
+
+        if conexion:
+            conexion.rollback()
 
         return jsonify({
             "ok": False,
             "error": "No fue posible crear la solicitud."
         }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if conexion:
+            conexion.close()
 
 @app.route("/api/auth/login", methods=["POST"])
 @limiter.limit("5 per minute")
