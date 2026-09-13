@@ -609,7 +609,7 @@ def login():
 
         cursor.execute("""
             UPDATE usuarios
-            SET ultimo_acceso = CURRENT_TIMESTAMP
+            SET ultimo_acceso = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
             WHERE id_usuario = %s;
         """, (usuario["id_usuario"],))
 
@@ -2849,7 +2849,9 @@ def obtener_perfil():
                 f.activo AS funcionario_activo,
                 u.activo AS usuario_activo,
                 TO_CHAR(
-                    u.ultimo_acceso,
+                    (
+                        u.ultimo_acceso AT TIME ZONE 'UTC'
+                    ) AT TIME ZONE 'America/Santiago',
                     'DD/MM/YYYY HH24:MI'
                 ) AS ultimo_acceso
             FROM usuarios u
