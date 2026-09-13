@@ -41,6 +41,7 @@
                 aria-label="Navegación principal"
             >
 
+                <!-- Dashboard: disponible para ambos perfiles -->
                 <a
                     href="/dashboard"
                     class="nav-link"
@@ -48,6 +49,8 @@
                     Dashboard
                 </a>
 
+
+                <!-- Solo Funcionario -->
                 <a
                     href="/solicitudes/nueva"
                     class="nav-link funcionario-option"
@@ -55,13 +58,17 @@
                     Nueva solicitud
                 </a>
 
+
+                <!-- Solo Administrador -->
                 <a
-                    href="#"
-                    class="nav-link"
+                    href="/admin/solicitudes"
+                    class="nav-link admin-option"
                 >
                     Solicitudes
                 </a>
 
+
+                <!-- Disponible para ambos perfiles -->
                 <a
                     href="/permisos"
                     class="nav-link active"
@@ -69,6 +76,8 @@
                     Permisos
                 </a>
 
+
+                <!-- Disponible para ambos perfiles -->
                 <a
                     href="/historial"
                     class="nav-link"
@@ -76,6 +85,17 @@
                     Historial
                 </a>
 
+
+                <!-- Disponible para ambos perfiles -->
+                <a
+                    href="/perfil"
+                    class="nav-link"
+                >
+                    Mi cuenta
+                </a>
+
+
+                <!-- Solo Administrador -->
                 <a
                     href="/admin/funcionarios"
                     class="nav-link admin-option"
@@ -83,15 +103,19 @@
                     Funcionarios
                 </a>
 
+
+                <!-- Solo Administrador -->
                 <a
-                    href="#"
+                    href="/estadisticas"
                     class="nav-link admin-option"
                 >
                     Estadísticas
                 </a>
 
+
+                <!-- Solo Administrador -->
                 <a
-                    href="#"
+                    href="/auditoria"
                     class="nav-link admin-option"
                 >
                     Auditoría
