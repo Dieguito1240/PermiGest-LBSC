@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Auditoría</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body auditoria-page">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/admin/solicitudes"
+                    class="nav-link"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="/permisos"
+                    class="nav-link"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="/historial"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="nav-link"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="/estadisticas"
+                    class="nav-link"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="/auditoria"
+                    class="nav-link active"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Trazabilidad del sistema
+                    </p>
+
+                    <h1>
+                        Auditoría
+                    </h1>
+
+                    <p class="header-description">
+                        Registro de acciones administrativas
+                        realizadas en PermiGest LBSC.
+                    </p>
+
+                </div>
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Administrador
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Administrador
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="btn-logout"
+                        class="btn-logout"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-cards">
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Registros
+                    </div>
+
+                    <div
+                        id="total-registros"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Operaciones auditadas
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Registros de hoy
+                    </div>
+
+                    <div
+                        id="registros-hoy"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Acciones registradas hoy
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Tipos de acción
+                    </div>
+
+                    <div
+                        id="tipos-accion"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Acciones diferentes registradas
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Registro de auditoría
+                        </h2>
+
+                        <p>
+                            Historial de operaciones relevantes
+                            realizadas por usuarios administradores.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="auditoria-filtros">
+
+                    <div class="form-group">
+
+                        <label for="buscar-auditoria">
+                            Buscar
+                        </label>
+
+                        <input
+                            type="text"
+                            id="buscar-auditoria"
+                            placeholder="Usuario, acción, entidad o detalle"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="filtro-accion">
+                            Acción
+                        </label>
+
+                        <select id="filtro-accion">
+
+                            <option value="">
+                                Todas las acciones
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Fecha y hora
+                                </th>
+
+                                <th>
+                                    Usuario
+                                </th>
+
+                                <th>
+                                    Acción
+                                </th>
+
+                                <th>
+                                    Entidad
+                                </th>
+
+                                <th>
+                                    Registro
+                                </th>
+
+                                <th>
+                                    Detalle
+                                </th>
+
+                                <th>
+                                    IP
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tabla-auditoria">
+
+                            <tr>
+
+                                <td colspan="8">
+                                    Cargando registros de auditoría...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/auditoria.js') }}"
+    ></script>
+
+</body>
+
+</html>

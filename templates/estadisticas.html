@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Estadísticas</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body estadisticas-page">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/admin/solicitudes"
+                    class="nav-link"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="/permisos"
+                    class="nav-link"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="/historial"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="nav-link"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="/estadisticas"
+                    class="nav-link active"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Análisis de información
+                    </p>
+
+                    <h1>
+                        Estadísticas
+                    </h1>
+
+                    <p class="header-description">
+                        Indicadores y análisis histórico de solicitudes
+                        y permisos registrados en PermiGest LBSC.
+                    </p>
+
+                </div>
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Administrador
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Administrador
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="btn-logout"
+                        class="btn-logout"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <section class="estadisticas-cards">
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Solicitudes
+                    </div>
+
+                    <div
+                        id="total-solicitudes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Registros históricos
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Permisos aprobados
+                    </div>
+
+                    <div
+                        id="total-permisos"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Permisos efectivos
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Funcionarios activos
+                    </div>
+
+                    <div
+                        id="funcionarios-activos"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Cuentas habilitadas
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Días utilizados
+                    </div>
+
+                    <div
+                        id="total-dias"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Acumulado aprobado
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Horas utilizadas
+                    </div>
+
+                    <div
+                        id="total-horas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Acumulado aprobado
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <section class="estadisticas-grid">
+
+                <article class="dashboard-panel estadistica-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Solicitudes por estado
+                            </h2>
+
+                            <p>
+                                Distribución de solicitudes según
+                                su estado actual.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="grafico-estados"
+                        class="grafico-barras"
+                    >
+                    </div>
+
+                </article>
+
+
+                <article class="dashboard-panel estadistica-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Solicitudes por tipo
+                            </h2>
+
+                            <p>
+                                Tipos de permiso con mayor utilización.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="grafico-tipos"
+                        class="grafico-barras"
+                    >
+                    </div>
+
+                </article>
+
+
+                <article class="dashboard-panel estadistica-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Solicitudes por funcionario
+                            </h2>
+
+                            <p>
+                                Cantidad registrada por funcionario.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="grafico-funcionarios"
+                        class="grafico-barras"
+                    >
+                    </div>
+
+                </article>
+
+
+                <article class="dashboard-panel estadistica-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2>
+                                Solicitudes por unidad
+                            </h2>
+
+                            <p>
+                                Distribución según unidad organizacional.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="grafico-unidades"
+                        class="grafico-barras"
+                    >
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Evolución mensual
+                        </h2>
+
+                        <p>
+                            Cantidad de solicitudes registradas
+                            durante cada período.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="grafico-meses"
+                    class="grafico-barras grafico-horizontal-amplio"
+                >
+                </div>
+
+            </section>
+
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Fechas con mayor demanda
+                        </h2>
+
+                        <p>
+                            Fechas de inicio con mayor concentración
+                            de solicitudes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                                <th>
+                                    Solicitudes
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabla-demanda">
+
+                            <tr>
+
+                                <td colspan="2">
+                                    Cargando información...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/estadisticas.js') }}"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Funcionarios</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="admin-funcionarios-page">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav class="sidebar-menu">
+
+                <a href="/dashboard">
+                    Dashboard
+                </a>
+
+                <a href="/admin/solicitudes">
+                    Solicitudes
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="active"
+                >
+                    Funcionarios
+                </a>
+
+                <a href="#">
+                    Permisos
+                </a>
+
+                <a href="#">
+                    Historial
+                </a>
+
+                <a href="#">
+                    Auditoría
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <header class="page-header">
+
+                <div>
+
+                    <span class="page-eyebrow">
+                        ADMINISTRACIÓN
+                    </span>
+
+                    <h1>
+                        Gestión de Funcionarios
+                    </h1>
+
+                    <p>
+                        Administración de funcionarios y cuentas de acceso
+                        registradas en PermiGest LBSC.
+                    </p>
+
+                </div>
+
+
+                <div class="header-user">
+
+                    <div>
+
+                        <strong id="nombreUsuario">
+                            Administrador
+                        </strong>
+
+                        <span id="rolUsuario">
+                            Administrador
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        id="btnCerrarSesion"
+                        class="btn-secondary"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <section class="stats-grid">
+
+                <article class="stat-card">
+
+                    <span>
+                        Total funcionarios
+                    </span>
+
+                    <strong id="totalFuncionarios">
+                        0
+                    </strong>
+
+                    <small>
+                        Registros disponibles
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <span>
+                        Activos
+                    </span>
+
+                    <strong id="totalActivos">
+                        0
+                    </strong>
+
+                    <small>
+                        Funcionarios habilitados
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <span>
+                        Inactivos
+                    </span>
+
+                    <strong id="totalInactivos">
+                        0
+                    </strong>
+
+                    <small>
+                        Funcionarios deshabilitados
+                    </small>
+
+                </article>
+
+            </section>
+
+
+            <section class="content-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Funcionarios registrados
+                        </h2>
+
+                        <p>
+                            Listado de funcionarios y cuentas asociadas
+                            al sistema.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="btnNuevoFuncionario"
+                        class="btn-primary"
+                        type="button"
+                    >
+                        + Nuevo funcionario
+                    </button>
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Funcionario
+                                </th>
+
+                                <th>
+                                    Correo
+                                </th>
+
+                                <th>
+                                    Unidad
+                                </th>
+
+                                <th>
+                                    Rol
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaFuncionarios">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Cargando funcionarios...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <div
+        id="modalFuncionario"
+        class="modal-overlay oculto"
+    >
+
+        <div class="modal-card modal-funcionario">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2 id="tituloModalFuncionario">
+                        Nuevo funcionario
+                    </h2>
+
+                    <p id="descripcionModalFuncionario">
+                        Registre al funcionario y cree su cuenta de acceso.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="btnCerrarModal"
+                    class="modal-close"
+                    aria-label="Cerrar"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="formNuevoFuncionario">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="nombres">
+                            Nombres *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombres"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="apellidoPaterno">
+                            Apellido paterno *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="apellidoPaterno"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="apellidoMaterno">
+                            Apellido materno
+                        </label>
+
+                        <input
+                            type="text"
+                            id="apellidoMaterno"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="correoInstitucional">
+                            Correo institucional *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="correoInstitucional"
+                            maxlength="150"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="unidadFuncionario">
+                            Unidad *
+                        </label>
+
+                        <select
+                            id="unidadFuncionario"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccione una unidad
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="rolFuncionario">
+                            Rol *
+                        </label>
+
+                        <select
+                            id="rolFuncionario"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccione un rol
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label
+                            id="labelPasswordFuncionario"
+                            for="passwordFuncionario"
+                        >
+                            Contraseña inicial *
+                        </label>
+
+                        <input
+                            type="password"
+                            id="passwordFuncionario"
+                            minlength="8"
+                            required
+                        >
+
+                        <small>
+                            Mínimo 8 caracteres.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label
+                            id="labelConfirmarPassword"
+                            for="confirmarPassword"
+                        >
+                            Confirmar contraseña *
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmarPassword"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div
+                        id="grupoEstadoFuncionario"
+                        class="form-group oculto"
+                    >
+
+                        <label for="estadoFuncionario">
+                            Estado del funcionario
+                        </label>
+
+                        <select id="estadoFuncionario">
+
+                            <option value="true">
+                                Activo
+                            </option>
+
+                            <option value="false">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="mensajeFuncionario"
+                    class="form-message"
+                >
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="btnCancelarFuncionario"
+                        class="btn-secondary"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="btnGuardarFuncionario"
+                        class="btn-primary"
+                    >
+                        Crear funcionario
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/funcionarios_admin.js') }}"
+    ></script>
+
+</body>
+
+</html>

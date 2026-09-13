@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Permisos</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body permisos-page">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/solicitudes/nueva"
+                    class="nav-link funcionario-option"
+                >
+                    Nueva solicitud
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="/permisos"
+                    class="nav-link active"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="/historial"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="nav-link admin-option"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link admin-option"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link admin-option"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Gestión de permisos
+                    </p>
+
+                    <h1>
+                        Permisos
+                    </h1>
+
+                    <p class="header-description">
+                        Consulta de permisos aprobados
+                        y registrados en el sistema.
+                    </p>
+
+                </div>
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Usuario
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Perfil
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="btn-logout"
+                        class="btn-logout"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <section
+                class="dashboard-cards"
+                aria-label="Resumen de permisos"
+            >
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Permisos
+                    </div>
+
+                    <div
+                        id="total-permisos"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Registros aprobados
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Días utilizados
+                    </div>
+
+                    <div
+                        id="total-dias"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Total acumulado en días
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Horas utilizadas
+                    </div>
+
+                    <div
+                        id="total-horas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Total acumulado en horas
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Permisos registrados
+                        </h2>
+
+                        <p id="descripcion-permisos">
+                            Permisos asociados al usuario autenticado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th class="col-funcionario">
+                                    Funcionario
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Periodo
+                                </th>
+
+                                <th>
+                                    Modalidad
+                                </th>
+
+                                <th>
+                                    Cantidad
+                                </th>
+
+                                <th>
+                                    Solicitud
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tabla-permisos">
+
+                            <tr>
+
+                                <td colspan="7">
+                                    Cargando permisos...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/permisos.js') }}"
+    ></script>
+
+</body>
+
+</html>

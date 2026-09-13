@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Solicitudes</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body">
+
+    <div class="app-layout">
+
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/admin/solicitudes"
+                    class="nav-link active"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Administración
+                    </p>
+
+                    <h1>
+                        Gestión de solicitudes
+                    </h1>
+
+                    <p class="header-description">
+                        Revise y resuelva las solicitudes
+                        realizadas por los funcionarios.
+                    </p>
+
+                </div>
+
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Usuario
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Administrador
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="/dashboard"
+                        class="btn-logout"
+                    >
+                        Volver
+                    </a>
+
+                </div>
+
+            </header>
+
+
+
+
+            <section class="dashboard-cards">
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Total
+                    </div>
+
+                    <div
+                        id="total-solicitudes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes registradas
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Pendientes
+                    </div>
+
+                    <div
+                        id="total-pendientes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Requieren revisión
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Aprobadas
+                    </div>
+
+                    <div
+                        id="total-aprobadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes aprobadas
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Rechazadas
+                    </div>
+
+                    <div
+                        id="total-rechazadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes rechazadas
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Solicitudes pendientes
+                        </h2>
+
+                        <p>
+                            Seleccione una solicitud para
+                            aprobarla o rechazarla.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="lista-solicitudes"
+                    class="solicitudes-admin-list"
+                >
+
+                    <p>
+                        Cargando solicitudes...
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+
+    <div
+        id="modal-resolucion"
+        class="modal-resolucion"
+        style="display: none;"
+    >
+
+        <div class="modal-contenido">
+
+            <h2 id="modal-titulo">
+                Resolver solicitud
+            </h2>
+
+
+            <p id="modal-descripcion">
+                Ingrese una observación si corresponde.
+            </p>
+
+
+            <textarea
+                id="observacion-resolucion"
+                rows="4"
+                maxlength="500"
+                placeholder="Observación de la resolución"
+            ></textarea>
+
+
+            <div
+                id="mensaje-resolucion"
+                class="mensaje-solicitud"
+            ></div>
+
+
+            <div class="form-actions">
+
+                <button
+                    id="btn-cancelar-resolucion"
+                    type="button"
+                    class="btn-secondary"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    id="btn-confirmar-resolucion"
+                    type="button"
+                    class="btn-primary btn-form"
+                >
+                    Confirmar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='js/solicitudes_admin.js') }}"
+    ></script>
+
+</body>
+
+</html>

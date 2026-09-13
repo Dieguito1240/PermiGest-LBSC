@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Inicio de sesión</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section
+            class="login-card"
+            aria-labelledby="titulo-login"
+        >
+
+            <div class="login-brand">
+
+                <div class="brand-icon">
+                    PG
+                </div>
+
+                <h1 id="titulo-login">
+                    PermiGest LBSC
+                </h1>
+
+                <p>
+                    Sistema de gestión de solicitudes
+                    y permisos del personal
+                </p>
+
+            </div>
+
+            <form
+                id="login-form"
+                class="login-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="correo">
+                        Correo institucional
+                    </label>
+
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        placeholder="nombre@lbsc.cl"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Ingrese su contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+                <div
+                    id="mensaje-login"
+                    class="mensaje-login"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Iniciar sesión
+                </button>
+
+                <a
+                    href="/recuperar-contrasena"
+                    class="forgot-link"
+                >
+                    ¿Olvidó su contraseña?
+                </a>
+
+            </form>
+
+            <footer class="login-footer">
+                Liceo Bicentenario Santa Cruz
+            </footer>
+
+        </section>
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/login.js') }}"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Nueva solicitud</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body">
+
+    <div class="app-layout">
+
+
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/solicitudes/nueva"
+                    class="nav-link active"
+                >
+                    Nueva solicitud
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+
+
+
+        <main class="dashboard-main">
+
+
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Gestión de permisos
+                    </p>
+
+                    <h1>
+                        Nueva solicitud
+                    </h1>
+
+                    <p class="header-description">
+                        Complete los datos correspondientes
+                        al permiso que desea solicitar.
+                    </p>
+
+                </div>
+
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Usuario
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Funcionario
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="/dashboard"
+                        class="btn-logout"
+                    >
+                        Volver
+                    </a>
+
+                </div>
+
+            </header>
+
+
+
+
+            <section class="dashboard-panel solicitud-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Datos de la solicitud
+                        </h2>
+
+                        <p>
+                            Ingrese la información requerida
+                            para registrar su solicitud.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form
+                    id="solicitud-form"
+                    class="solicitud-form"
+                >
+
+                    <div class="form-grid">
+
+
+
+                        <div class="form-group">
+
+                            <label for="tipo-permiso">
+                                Tipo de permiso *
+                            </label>
+
+                            <select
+                                id="tipo-permiso"
+                                required
+                            >
+                                <option value="">
+                                    Seleccione un tipo de permiso
+                                </option>
+                            </select>
+
+                        </div>
+
+
+
+
+                        <div class="form-group">
+
+                            <label for="modalidad-visible">
+                                Modalidad
+                            </label>
+
+                            <input
+                                id="modalidad-visible"
+                                type="text"
+                                value="Seleccione un tipo de permiso"
+                                readonly
+                            >
+
+                            <input
+                                id="modalidad"
+                                type="hidden"
+                            >
+
+                        </div>
+
+
+
+
+                        <div class="form-group">
+
+                            <label for="fecha-inicio">
+                                Fecha de inicio *
+                            </label>
+
+                            <input
+                                id="fecha-inicio"
+                                type="date"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label for="fecha-termino">
+                                Fecha de término *
+                            </label>
+
+                            <input
+                                id="fecha-termino"
+                                type="date"
+                                required
+                            >
+
+                        </div>
+
+
+
+
+                        <div
+                            id="grupo-hora-inicio"
+                            class="form-group campo-horario"
+                            style="display: none;"
+                        >
+
+                            <label for="hora-inicio">
+                                Hora de inicio *
+                            </label>
+
+                            <input
+                                id="hora-inicio"
+                                type="time"
+                            >
+
+                        </div>
+
+
+
+                        <div
+                            id="grupo-hora-termino"
+                            class="form-group campo-horario"
+                            style="display: none;"
+                        >
+
+                            <label for="hora-termino">
+                                Hora de término *
+                            </label>
+
+                            <input
+                                id="hora-termino"
+                                type="time"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="form-group">
+
+                        <label for="observacion">
+                            Observación
+                        </label>
+
+                        <textarea
+                            id="observacion"
+                            rows="4"
+                            maxlength="500"
+                            placeholder="Ingrese información adicional relacionada con la solicitud, si corresponde."
+                        ></textarea>
+
+                    </div>
+
+
+
+
+                    <div class="checkbox-group">
+
+                        <input
+                            id="requiere-reemplazo"
+                            type="checkbox"
+                        >
+
+                        <label for="requiere-reemplazo">
+                            Esta solicitud requiere reemplazo
+                        </label>
+
+                    </div>
+
+
+
+
+                    <div
+                        id="mensaje-solicitud"
+                        class="mensaje-solicitud"
+                        aria-live="polite"
+                    ></div>
+
+
+
+
+                    <div class="form-actions">
+
+                        <a
+                            href="/dashboard"
+                            class="btn-secondary"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn-primary btn-form"
+                        >
+                            Enviar solicitud
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+
+
+            <section class="dashboard-panel info-panel">
+
+                <div>
+
+                    <span class="info-label">
+                        Información
+                    </span>
+
+                    <h2>
+                        Solicitud de permiso
+                    </h2>
+
+                    <p>
+                        Una vez enviada, la solicitud quedará
+                        registrada con estado pendiente hasta
+                        ser revisada por un administrador.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <script
+        src="{{ url_for('static', filename='js/nueva_solicitud.js') }}"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Restablecer contraseña</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="login-body">
+
+    <main class="recovery-container">
+
+        <section class="recovery-card">
+
+            <div class="recovery-logo">
+                PG
+            </div>
+
+            <h1>
+                Nueva contraseña
+            </h1>
+
+            <p class="recovery-description">
+                Cree una nueva contraseña para su cuenta de PermiGest LBSC.
+            </p>
+
+            <form id="formRestablecerPassword">
+
+                <div class="form-group">
+
+                    <label for="nuevaPassword">
+                        Nueva contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="nuevaPassword"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+
+                    <small>
+                        Mínimo 8 caracteres.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirmarNuevaPassword">
+                        Confirmar nueva contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmarNuevaPassword"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+
+                </div>
+
+
+                <div
+                    id="mensajeRestablecer"
+                    class="form-message"
+                >
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="btnRestablecer"
+                    class="btn-primary recovery-button"
+                >
+                    Actualizar contraseña
+                </button>
+
+            </form>
+
+
+            <div class="recovery-back">
+
+                <a href="/">
+                    Volver al inicio de sesión
+                </a>
+
+            </div>
+
+
+            <div class="recovery-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </section>
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/restablecer_contrasena.js') }}"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+Flask
+Flask-JWT-Extended
+Flask-Limiter
+psycopg[binary]
+gunicorn
+itsdangerous
+Werkzeug

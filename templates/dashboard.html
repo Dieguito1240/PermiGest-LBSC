@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link active"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/solicitudes/nueva"
+                    class="nav-link funcionario-option"
+                >
+                    Nueva solicitud
+                </a>
+
+                <a
+                    href="/admin/solicitudes"
+                    class="nav-link admin-option"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="/permisos"
+                    class="nav-link"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="/historial"
+                    class="nav-link"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="/perfil"
+                    class="nav-link"
+                >
+                    Mi cuenta
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="nav-link admin-option"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="/estadisticas"
+                    class="nav-link admin-option"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="/auditoria"
+                    class="nav-link admin-option"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Panel de gestión
+                    </p>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                    <p class="header-description">
+                        Resumen de solicitudes y permisos
+                        del personal.
+                    </p>
+
+                </div>
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Usuario
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Perfil
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="btn-logout"
+                        class="btn-logout"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+            <section
+                class="dashboard-cards"
+                aria-label="Indicadores principales"
+            >
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Solicitudes
+                    </div>
+
+                    <div
+                        id="total-solicitudes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Registros disponibles
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Aprobadas
+                    </div>
+
+                    <div
+                        id="total-aprobadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes aprobadas
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Pendientes
+                    </div>
+
+                    <div
+                        id="total-pendientes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Requieren revisión
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Rechazadas
+                    </div>
+
+                    <div
+                        id="total-rechazadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes rechazadas
+                    </div>
+
+                </article>
+
+            </section>
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Solicitudes recientes
+                        </h2>
+
+                        <p>
+                            Últimos registros disponibles
+                            para el usuario autenticado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>
+                                    Funcionario
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                                <th>
+                                    Modalidad
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabla-solicitudes">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Cargando información...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <section class="dashboard-panel info-panel">
+
+                <div>
+
+                    <span class="info-label">
+                        Sistema
+                    </span>
+
+                    <h2>
+                        PermiGest LBSC
+                    </h2>
+
+                    <p>
+                        Plataforma institucional para la
+                        administración, seguimiento y análisis
+                        de solicitudes y permisos del personal.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+</body>
+
+</html>

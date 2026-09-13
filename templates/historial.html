@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PermiGest LBSC | Historial</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body class="dashboard-body historial-page">
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    PG
+                </div>
+
+                <div>
+                    <strong>PermiGest</strong>
+                    <span>LBSC</span>
+                </div>
+
+            </div>
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Navegación principal"
+            >
+
+                <a
+                    href="/dashboard"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="/solicitudes/nueva"
+                    class="nav-link funcionario-option"
+                >
+                    Nueva solicitud
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                    id="menuSolicitudes"
+                >
+                    Solicitudes
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                    id="menuPermisos"
+                >
+                    Permisos
+                </a>
+
+                <a
+                    href="/historial"
+                    class="nav-link active"
+                >
+                    Historial
+                </a>
+
+                <a
+                    href="/admin/funcionarios"
+                    class="nav-link admin-option"
+                >
+                    Funcionarios
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link admin-option"
+                >
+                    Estadísticas
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link admin-option"
+                >
+                    Auditoría
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                Liceo Bicentenario Santa Cruz
+            </div>
+
+        </aside>
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="header-label">
+                        Seguimiento
+                    </p>
+
+                    <h1>
+                        Historial
+                    </h1>
+
+                    <p class="header-description">
+                        Consulta histórica de solicitudes y
+                        resoluciones registradas en el sistema.
+                    </p>
+
+                </div>
+
+                <div class="user-area">
+
+                    <div class="user-info">
+
+                        <strong id="nombre-usuario">
+                            Usuario
+                        </strong>
+
+                        <span id="rol-usuario">
+                            Perfil
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="btn-logout"
+                        class="btn-logout"
+                        type="button"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </header>
+
+            <section
+                class="dashboard-cards"
+                aria-label="Resumen del historial"
+            >
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Registros
+                    </div>
+
+                    <div
+                        id="total-registros"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes registradas
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Aprobadas
+                    </div>
+
+                    <div
+                        id="total-aprobadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes aprobadas
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Pendientes
+                    </div>
+
+                    <div
+                        id="total-pendientes"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        En espera de resolución
+                    </div>
+
+                </article>
+
+                <article class="stat-card">
+
+                    <div class="stat-title">
+                        Rechazadas
+                    </div>
+
+                    <div
+                        id="total-rechazadas"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Solicitudes rechazadas
+                    </div>
+
+                </article>
+
+            </section>
+
+            <section class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Historial de solicitudes
+                        </h2>
+
+                        <p id="descripcion-historial">
+                            Registros asociados al usuario autenticado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th class="col-funcionario">
+                                    Funcionario
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Periodo
+                                </th>
+
+                                <th>
+                                    Modalidad
+                                </th>
+
+                                <th>
+                                    Estado
+                                </th>
+
+                                <th>
+                                    Resolución
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabla-historial">
+
+                            <tr>
+
+                                <td colspan="7">
+                                    Cargando historial...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script
+        src="{{ url_for('static', filename='js/historial.js') }}"
+    ></script>
+
+</body>
+
+</html>
